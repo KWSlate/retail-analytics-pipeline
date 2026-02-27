@@ -1,0 +1,87 @@
+-- Create Raw Data Table --
+
+USE [Retail_Analytics]
+GO
+
+IF NOT EXISTS (SELECT 1 FROM sys.schemas WHERE name = 'stg')
+    EXEC('CREATE SCHEMA stg');
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [stg].[DV_Raw_Data_UK_2013](
+	DAY_DT			datetime 		NULL,
+	DAY_MAIN_DSC 		date 			NULL,
+	RET_STORE_NBR_ID 	nchar(25) 		NULL,
+	UPC_TXT			nchar(50) 		NULL,
+	WJXBFS1			decimal(18, 4) 		NULL,
+	WJXBFS2			decimal(18, 4) 		NULL,
+	WJXBFS3			decimal(18, 4) 		NULL,
+	WJXBFS4 		decimal(18, 4) 		NULL
+) ON [PRIMARY]
+GO
+
+
+-- Create Raw Product Table --
+
+IF NOT EXISTS (SELECT 1 FROM sys.schemas WHERE name = 'core')
+    EXEC('CREATE SCHEMA core');
+GO
+
+CREATE TABLE core.Product
+(
+    id              	INT IDENTITY(1,1) NOT NULL,
+    Dept_Nbr         	INT               NULL,
+    UPC             	VARCHAR(20)       NOT NULL,
+    Supplier        	VARCHAR(100)      NULL,
+    Category        	VARCHAR(100)      NULL,
+    Subcategory     	VARCHAR(100)      NULL,
+    Brand           	VARCHAR(100)      NULL,
+    Package         	VARCHAR(100)      NULL,
+    Product_Desc	VARCHAR(255)      NULL,
+    Sales		DECIMAL(18,4)	  NULL,
+    Units		DECIMAL(18,4)	  NULL,
+    Avg_Retail       	DECIMAL(18,4)     NULL,
+    Date_created        DATETIME2         NOT NULL DEFAULT SYSDATETIME(),
+    CONSTRAINT PK_Product PRIMARY KEY (id)
+);
+GO
+
+CREATE UNIQUE INDEX UX_Product_UPC
+ON core.Product (UPC);
+GO
+
+-- Create Raw Store Table --
+
+USE Retail_Analytics;
+GO
+
+CREATE TABLE core.Store
+(
+    id                                  INT IDENTITY(1,1) NOT NULL,
+    Store_Nbr                           VARCHAR(25)       NOT NULL,
+    Store_Name                          VARCHAR(200)      NULL,
+    Store_Type                      	VARCHAR(100)      NULL,
+    City                                VARCHAR(100)      NULL,
+    State                               CHAR(2)           NULL,
+    Zip_Code                            VARCHAR(10)       NULL,
+    Focus1                              VARCHAR(100)      NULL,
+    Focus2                              VARCHAR(100)      NULL,
+    Focus3                              VARCHAR(100)      NULL,
+    Sales                               DECIMAL(18,2)     NULL,
+    Units                               INT               NULL,
+    Status                              VARCHAR(50)       NULL,
+    Date_Created                        DATE              NULL,
+    CONSTRAINT PK_Store PRIMARY KEY (id)
+);
+GO
+
+CREATE UNIQUE INDEX UX_Store_StoreNbr
+ON core.Store (StoreNbr);
+GO
+
+
