@@ -23,3 +23,5 @@ CREATE TABLE [stg].[DV_Raw_Data_UK_2013](
 ) ON [PRIMARY]
 GO
 
+ALTER TABLE [stg].[DV_Raw_Data_UK_2013] ADD  CONSTRAINT [DF_Date_Created]  DEFAULT (sysdatetime()) FOR [Date_Created]
+GO
