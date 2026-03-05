@@ -8,20 +8,18 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE TABLE [core].[Product](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[Dept_Nbr] [int] NULL,
-	[UPC] [varchar](50) NOT NULL,
-	[Supplier] [varchar](100) NULL,
-	[Category] [varchar](100) NULL,
-	[Subcategory] [varchar](100) NULL,
-	[Brand] [varchar](100) NULL,
-	[Package] [varchar](100) NULL,
-	[Product_Desc] [varchar](255) NULL,
-	[Sales] [decimal](18, 4) NULL,
-	[Units] [decimal](18, 4) NULL,
-	[Avg_Retail] [decimal](18, 4) NULL,
-	[Date_Created] [datetime2](7) NOT NULL,
+CREATE TABLE [core].[product](
+	[upc] [varchar](50) NOT NULL,
+	[dept_nbr] [int] NULL,
+	[prime_item_nbr] [varchar](50) NULL,
+	[description] [varchar](100) NULL,
+	[supplier] [varchar](100) NULL,
+	[category] [varchar](100) NULL,
+	[subcategory] [varchar](100) NULL,
+	[brand] [varchar](100) NULL,
+	[package] [varchar](100) NULL,
+	[date_created] [datetime2](3) NOT NULL,
+	[source_file_name] [varchar](100) NULL,
  CONSTRAINT [PK_Product] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
