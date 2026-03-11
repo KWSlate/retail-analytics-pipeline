@@ -1,0 +1,8 @@
+-- ------------------------------------------------------------------------
+-- Coding Standards:
+-- - Primary keys:   id (identity)
+-- - Foreign keys:   table_id (e.g. city_id, region_id)
+-- - Table aliases:  full object name (e.g. dim_store, dim_city)
+-- - SQL keywords:   lowercase
+-- - Schema prefix:  always included
+-- ------------------------------------------------------------------------

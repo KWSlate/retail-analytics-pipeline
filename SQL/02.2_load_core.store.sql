@@ -1,9 +1,9 @@
 -- ------------------------------------------------------------------------
 -- Script:  02.2_load_core.store.sql
--- Purpose: Load raw store dimension data from CSV file
+-- Purpose: Load raw store dimension data from txt file
 -- ------------------------------------------------------------------------
-declare @File_to_load varchar(255) = 'C:\Users\kwsla\Documents\Retail_BI_Project\Raw Data\UK_Segmentation_FINAL_Store.csv'
-declare @FileName varchar(100) = 'UK_Segmentation_FINAL_Store.csv'
+declare @File_to_load varchar(255) = 'C:\Users\kwsla\Documents\Retail_BI_Project\Raw Data\UK_Segmentation_FINAL_Store.txt'
+declare @FileName varchar(100) = 'UK_Segmentation_FINAL_Store.txt'
 declare @SQL nvarchar(500)
 
 -- 1: Clear tables
@@ -27,7 +27,7 @@ set @SQL = N'bulk insert #store_load
 from ''' + @File_to_load + '''
 with (
     firstrow = 2,
-    fieldterminator = '','',
+    fieldterminator = ''\t'',
     rowterminator = ''0x0a'',
     tablock
 );'
