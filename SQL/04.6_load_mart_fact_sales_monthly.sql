@@ -73,3 +73,20 @@ select
     max(cast(year_num as varchar) + '-' + 
         right('0' + cast(month_num as varchar), 2)) as last_month
 from mart.fact_sales_monthly;
+
+-- add date_key to fact_sales_monthly
+alter table mart.fact_sales_monthly
+add date_key int;
+
+-- populate from dim_date matching year and month
+update mart.fact_sales_monthly
+set date_key = dim_date.date_key
+from mart.fact_sales_monthly
+inner join mart.dim_date
+    on fact_sales_monthly.year_num = dim_date.year_num
+    and fact_sales_monthly.month_num = dim_date.month_num
+    and dim_date.date = dateadd(day, 1 - day(dim_date.date), dim_date.date);
+
+-- verify
+select count(*) as total, count(date_key) as with_date_key 
+from mart.fact_sales_monthly;
