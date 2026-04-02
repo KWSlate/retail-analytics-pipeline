@@ -8,7 +8,7 @@
 
 A complete end-to-end retail analytics solution demonstrating full-stack BI engineering capability — from raw data ingestion through dimensional modeling to executive-level Power BI reporting published in the cloud.
 
-**112 million rows** of UK beverage retail POS data processed through a three-layer medallion architecture (Bronze → Silver → Mart), housed in Azure SQL, and surfaced through an interactive Power BI dashboard with dynamic dimension switching, geographic analysis, pricing analytics, and growth trend views.
+**112 million records** of UK beverage retail POS data processed through a three-layer medallion architecture (Bronze → Silver → Mart), housed in Azure SQL, and surfaced through an interactive Power BI dashboard with dynamic dimension switching, geographic analysis, pricing analytics, and growth trend views.
 
 > *Data used in this project is an anonymized historical retail dataset used for demonstration purposes only. Store names have been modified. No proprietary or confidential business information is represented.*
 
@@ -121,7 +121,7 @@ A complete end-to-end retail analytics solution demonstrating full-stack BI engi
 ## Key Engineering Decisions
 
 **Why monthly aggregation?**
-Source data is daily grain (112M rows). Power BI Import mode performs optimally under ~10M rows. Monthly aggregation at store × product level produces 5.75M rows — preserving full dimensional slicing capability while enabling fast interactive visuals. The daily grain fact table is retained in the mart for future DirectQuery or detailed analysis needs.
+Source data is daily grain (112M records). Power BI Import mode performs optimally under ~10M rows. Monthly aggregation at store × product level produces 5.75M rows — preserving full dimensional slicing capability while enabling fast interactive visuals. The daily grain fact table is retained in the mart for future DirectQuery or detailed analysis needs.
 
 **Why SCD Type 2 on dimensions?**
 Both `mart.dim_store` and `mart.dim_product` include `valid_from`, `valid_to`, `is_current`, and durable surrogate keys separate from natural keys. This supports point-in-time accuracy and enables tracking of attribute changes in a continuous pipeline scenario.
@@ -133,7 +133,7 @@ For this single-source dataset, silver adds complexity that would not be strictl
 Three subcategories (Adult, Flavoured Water, Water) appeared under multiple parent categories in the source data due to a Seasonal promotional classification scheme. This caused 287 products to have duplicate rows in the mart dimension, inflating the fact table from 112M to 125M rows. Resolved using `ROW_NUMBER()` deduplication, preferring the non-Seasonal subcategory assignment. Full diagnostic scripts preserved in `04.3a_investigate_dim_product_duplicates.sql`.
 
 **Why Field Parameters instead of duplicating visuals?**
-The CMI tool (Ken's original Excel/VBA analytics platform) used macros to dynamically switch chart dimensions. Power BI's Field Parameters feature replicates this natively — one visual, one measure set, 12 selectable dimensions. The Focus By selector and Sales/Volume toggle together produce the same interactive experience as the original CMI tool without any custom code.
+The CMI tool (Ken Slate's original Excel/VBA analytics platform) used VBA (macros) to dynamically switch chart dimensions. Power BI's Field Parameters feature replicates this natively — one visual, one measure set, 12 selectable dimensions. The Focus By selector and Sales/Volume toggle together produce the same interactive experience as the original CMI tool without any custom code.
 
 ---
 
@@ -247,7 +247,7 @@ Power BI's built-in forecast function requires a continuous date or numeric axis
 
 **Ken Slate** — Senior Data Engineer / BI Analytics Engineer
 
-30+ years of experience spanning data engineering, business intelligence, and category management analytics. Previously built the Category Management Insights (CMI) tool for Coca-Cola's Walmart International team — a sophisticated Excel/VBA analytics platform that contributed to a 5-year sales share CAGR of 2.5%. That tool is the direct inspiration for this project's Power BI report design.
+25+ years of experience spanning data engineering, business intelligence, and category management analytics. Previously built the Category Management Insights (CMI) tool for Coca-Cola's Walmart International team — a sophisticated Excel/VBA analytics platform that contributed to a 5-year sales share CAGR of 2.5%. That tool is the direct inspiration for this project's Power BI report design.
 
 This portfolio project demonstrates end-to-end capability from raw data pipeline through cloud-hosted executive reporting — the combination of pipeline engineering depth and business analytics domain knowledge that LinkedIn profile listings cannot convey.
 
